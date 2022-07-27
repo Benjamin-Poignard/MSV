@@ -8,7 +8,7 @@ for kk = 1:K
     hv = 10;
     cond = true;
     while cond
-        choose = round(((n-len-hv)*rand(1))+1);
+        choose = round(((n-len)*rand(1))+1);
         cond = (choose+len+hv>n)||(choose<hv);
     end
     y_f(:,kk) = Y(choose+1:choose+len); XX_f(:,:,kk) = XX(choose+1:choose+len,:);
