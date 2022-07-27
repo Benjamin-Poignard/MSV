@@ -8,13 +8,13 @@ for kk = 1:K
     hv = 10;
     cond = true;
     while cond
-        choose = round(((n-len)*rand(1))+1);
-        cond = (choose > n-len-hv);
+        choose = round(((n-len-hv)*rand(1))+1);
+        cond = (choose+len+hv>n)||(choose<hv);
     end
-
+    y_f(:,kk) = Y(choose+1:choose+len); XX_f(:,:,kk) = XX(choose+1:choose+len,:);
     y_temp = Y; XX_temp = XX;
     y_temp(choose+1-hv:choose+len+hv) = []; XX_temp(choose+1-hv:choose+len+hv,:) = [];
-    y_f(:,kk) = Y(choose+1:choose+len); XX_f(:,:,kk) = XX(choose+1:choose+len,:);
+    
     
     B_up = [];
     for nn = 1:length(lambda)
@@ -32,9 +32,9 @@ for kk = 1:K
 end
 count = zeros(length(lambda),1);
 for ii = 1:length(lambda)
-   for kk = 1:K
-       count(ii) = count(ii) + sum((y_f(:,kk)-XX_f(:,:,kk)*theta_fold(:,ii,kk)).^2);
-   end
+    for kk = 1:K
+        count(ii) = count(ii) + sum((y_f(:,kk)-XX_f(:,:,kk)*theta_fold(:,ii,kk)).^2);
+    end
 end
 clear ii
 [~,ind] = min(count); lambda_opt = lambda(ind);

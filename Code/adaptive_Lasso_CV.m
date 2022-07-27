@@ -9,7 +9,7 @@ for kk = 1:K
     cond = true;
     while cond
         choose = round(((n-len)*rand(1))+1);
-        cond = (choose > n-len-hv);
+        cond = (choose+len+hv>n)||(choose<hv);
     end
     
     y_temp = Y; XX_temp = XX;
