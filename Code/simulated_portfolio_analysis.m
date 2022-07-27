@@ -93,7 +93,7 @@ res_in = res(1:T_in,:); res_out = res(T_out:end,:);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % len is the size of the test set
-len = round(length(res_in)/4);
+len = round(length(res_in)/4); folds = 5;
 
 % A cross-validation procedure is performed to select the optimal tuning
 % parameter lambda. A grid search is specified around sqrt(log(p*N^2)/T),
@@ -104,25 +104,25 @@ len = round(length(res_in)/4);
 p = 10;
 % Adaptive lasso penalised MSV
 lambda = 0.5*(0.1:0.1:1.5)*sqrt(log(p*N^2)/T);
-[~,B,Sig_zeta,Sig_alpha,Gamma] = SV_process_estim_memo(res_in,p,'alasso','no-constant',lambda,len,3);
+[~,B,Sig_zeta,Sig_alpha,Gamma] = SV_process_estim_memo(res_in,p,'alasso','no-constant',lambda,len,folds);
 % Generate the out-of-sample forecasts of the Adaptive Lasso MSV using res_out
 H_msv_ols_al = generate_SV_process(res_out,p,B,Sig_zeta,Sig_alpha,Gamma);
 
 % SCAD penalised MSV
 lambda = 0.5*(0.1:0.1:1.5)*sqrt(log(p*N^2)/T);
-[~,B,Sig_zeta,Sig_alpha,Gamma] = SV_process_estim_memo(res_in,p,'scad','no-constant',lambda,len,3);
+[~,B,Sig_zeta,Sig_alpha,Gamma] = SV_process_estim_memo(res_in,p,'scad','no-constant',lambda,len,folds);
 % Generate the out-of-sample forecasts of the SCAD MSV using res_out
 H_msv_ols_scad = generate_SV_process(res_out,p,B,Sig_zeta,Sig_alpha,Gamma);
 
 % MCP penalised MSV
 lambda = 0.5*(0.1:0.1:1.5)*sqrt(log(p*N^2)/T);
-[~,B,Sig_zeta,Sig_alpha,Gamma] = SV_process_estim_memo(res_in,p,'mcp','no-constant',lambda,len,3);
+[~,B,Sig_zeta,Sig_alpha,Gamma] = SV_process_estim_memo(res_in,p,'mcp','no-constant',lambda,len,folds);
 % Generate the out-of-sample forecasts of the MCP MSV using res_out
 H_msv_ols_mcp = generate_SV_process(res_out,p,B,Sig_zeta,Sig_alpha,Gamma);
 
 % Non-penalised MSV
 lambda = 0;
-[~,B,Sig_zeta,Sig_alpha,Gamma] = SV_process_estim_memo(res_in,p,'nonpen','no-constant',lambda,len,3);
+[~,B,Sig_zeta,Sig_alpha,Gamma] = SV_process_estim_memo(res_in,p,'nonpen','no-constant',lambda,len,folds);
 % Generate the out-of-sample forecasts of the Non-penalised MSV using res_out
 H_msv_ols_nonpen = generate_SV_process(res_out,p,B,Sig_zeta,Sig_alpha,Gamma);
 
@@ -130,25 +130,25 @@ H_msv_ols_nonpen = generate_SV_process(res_out,p,B,Sig_zeta,Sig_alpha,Gamma);
 p = 20;
 % Adaptive lasso penalised MSV
 lambda = 0.5*(0.1:0.1:1.5)*sqrt(log(p*N^2)/T);
-[~,B,Sig_zeta,Sig_alpha,Gamma] = SV_process_estim_memo(res_in,p,'alasso','no-constant',lambda,len,3);
+[~,B,Sig_zeta,Sig_alpha,Gamma] = SV_process_estim_memo(res_in,p,'alasso','no-constant',lambda,len,folds);
 % Generate the out-of-sample forecasts of the Adaptive Lasso MSV using res_out
 H_msv_ols_al_l = generate_SV_process(res_out,p,B,Sig_zeta,Sig_alpha,Gamma);
 
 % SCAD penalised MSV
 lambda = 0.5*(0.1:0.1:1.5)*sqrt(log(p*N^2)/T);
-[~,B,Sig_zeta,Sig_alpha,Gamma] = SV_process_estim_memo(res_in,p,'scad','no-constant',lambda,len,3);
+[~,B,Sig_zeta,Sig_alpha,Gamma] = SV_process_estim_memo(res_in,p,'scad','no-constant',lambda,len,folds);
 % Generate the out-of-sample forecasts of the SCAD MSV using res_out
 H_msv_ols_scad_l = generate_SV_process(res_out,p,B,Sig_zeta,Sig_alpha,Gamma);
 
 % MCP penalised MSV
 lambda = 0.5*(0.1:0.1:1.5)*sqrt(log(p*N^2)/T);
-[~,B,Sig_zeta,Sig_alpha,Gamma] = SV_process_estim_memo(res_in,p,'mcp','no-constant',lambda,len,3);
+[~,B,Sig_zeta,Sig_alpha,Gamma] = SV_process_estim_memo(res_in,p,'mcp','no-constant',lambda,len,folds);
 % Generate the out-of-sample forecasts of the MCP MSV using res_out
 H_msv_ols_mcp_l = generate_SV_process(res_out,p,B,Sig_zeta,Sig_alpha,Gamma);
 
 % Non-penalised MSV
 lambda = 0;
-[~,B,Sig_zeta,Sig_alpha,Gamma] = SV_process_estim_memo(res_in,p,'nonpen','no-constant',lambda,len,3);
+[~,B,Sig_zeta,Sig_alpha,Gamma] = SV_process_estim_memo(res_in,p,'nonpen','no-constant',lambda,len,folds);
 % Generate the out-of-sample forecasts of the Non-penalised MSV using res_out
 H_msv_ols_nonpen_l = generate_SV_process(res_out,p,B,Sig_zeta,Sig_alpha,Gamma);
 

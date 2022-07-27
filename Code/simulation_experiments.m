@@ -24,7 +24,7 @@ for oo = 1:Nsim
     % len is the size of the test set for cross-validation 
     len = round(T/4); 
     % fold is the number of folds for cross-validation
-    folds = 4;
+    folds = 5;
     
     % SCAD penalisation
     % p: number of specified lags
@@ -101,7 +101,7 @@ for oo = 1:Nsim
     
     [res,Sigma] = DGP_march50(T,N);
     
-    len = round(T/4); folds = 4;
+    len = round(T/4); folds = 5;
  
     p = 5;
     lambda = 0.2*(0.01:0.01:0.5)*sqrt(log(p*N^2)/T);  
@@ -159,7 +159,7 @@ for oo = 1:Nsim
     
     [res,Sigma] = DGP_march100(T,N);
     
-    len = round(T/4); folds = 4;
+    len = round(T/4); folds = 5;
     
     p = 5; 
     lambda = 0.2*(0.01:0.01:0.5)*sqrt(log(p*N^2)/T);  
@@ -217,7 +217,7 @@ for oo = 1:Nsim
     
     [res,Sigma] = DGP_bekk15(T,N);
     
-    len = round(T/4); folds = 4;
+    len = round(T/4); folds = 5;
   
     p = 30;
     lambda = 0.5*(0.01:0.01:0.5)*sqrt(log(p*N^2)/T);  
@@ -273,7 +273,7 @@ for oo = 1:Nsim
     
     [res,Sigma] = DGP_bekk50(T,N);
     
-    len = round(T/4); folds = 4;
+    len = round(T/4); folds = 5;
    
     p = 15;
     lambda = 0.5*(0.01:0.01:0.5)*sqrt(log(p*N^2)/T); 
@@ -331,7 +331,7 @@ for oo = 1:Nsim
     
     [res,Sigma] = DGP_bekk100(T,N);
     
-    len = round(T/4); folds = 4;
+    len = round(T/4); folds = 5;
     
     p = 5;
     lambda = 0.5*(0.01:0.01:0.5)*sqrt(log(p*N^2)/T); 
