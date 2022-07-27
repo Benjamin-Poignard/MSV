@@ -93,7 +93,7 @@ res_in = res(1:T_in,:); res_out = res(T_out:end,:);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % len is the size of the test set
-len = length(res_in)/2;
+len = round(length(res_in)/4);
 
 % A cross-validation procedure is performed to select the optimal tuning
 % parameter lambda. A grid search is specified around sqrt(log(p*N^2)/T),
