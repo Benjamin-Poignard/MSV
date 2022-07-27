@@ -5,7 +5,7 @@ XX_f = zeros(len,p,K); y_f = zeros(len,K);
 theta_fold = zeros(length(lambda)*p,length(gamma),K);
 
 for kk = 1:K
-    hv = 10;
+    hv = round(0.25*n);
     cond = true;
     while cond
         choose = round(((n-len)*rand(1))+1);
