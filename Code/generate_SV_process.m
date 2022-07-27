@@ -39,15 +39,9 @@ c_hat = inv(eye(N)-Phi_sec)*c_star;
 c_vec = kron(ones(T,1),c_hat); % size of the vector: TN
 
 % computation of the V_alpha matrix
-V_alpha = zeros(T*N);
-for ii = 1:T
-    for jj = ii:T
-        V_alpha(1+(ii-1)*N:ii*N,1+(jj-1)*N:jj*N) = Sig_alpha*(Phi_sec')^(jj-ii);
-        V_alpha(1+(jj-1)*N:jj*N,1+(ii-1)*N:ii*N) = V_alpha(1+(ii-1)*N:ii*N,1+(jj-1)*N:jj*N)';
-    end
-end
+V_alpha = fV(Sig_alpha,Phi_sec,T);
 V_zeta = kron(eye(T),Sig_zeta);
-V_alpha = proj_defpos(V_alpha);
+
 % Obtain V_x
 V_x = V_alpha+V_zeta;
 
