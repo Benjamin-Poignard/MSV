@@ -5,14 +5,15 @@ XX_f = zeros(len,p,K); y_f = zeros(len,K);
 theta_fold = zeros(p,length(lambda),K);
 
 for kk = 1:K
+    hv = 10;
     cond = true;
     while cond
         choose = round(((n-len)*rand(1))+1);
-        cond = (choose > n-len-5);
+        cond = (choose > n-len-hv);
     end
 
     y_temp = Y; XX_temp = XX;
-    y_temp(choose+1:choose+len) = []; XX_temp(choose+1:choose+len,:) = [];
+    y_temp(choose+1-hv:choose+len+hv) = []; XX_temp(choose+1-hv:choose+len+hv,:) = [];
     y_f(:,kk) = Y(choose+1:choose+len); XX_f(:,:,kk) = XX(choose+1:choose+len,:);
     
     B_up = [];
