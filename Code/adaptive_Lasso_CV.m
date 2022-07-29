@@ -5,18 +5,23 @@ XX_f = zeros(len,p,K); y_f = zeros(len,K);
 theta_fold = zeros(length(lambda)*p,length(gamma),K);
 
 for kk = 1:K
-    hv = round(0.25*n);
-    cond = true;
-    while cond
-        choose = round(((n-len)*rand(1))+1);
-        cond = (choose+len+hv>n)||(choose<hv);
+    hv = round(0.05*n); choose = round(((n-len)*rand(1))+1);
+    if and(choose+hv+len<n,choose>hv)
+        y_f(:,kk) = Y(choose+1:choose+len,:);
+        XX_f(:,:,kk) = XX(choose+1:choose+len,:);
+        XX_temp = XX; XX_temp(choose+1-hv:choose+len+hv,:) = [];
+        y_temp = Y; y_temp(choose+1-hv:choose+len+hv,:) = [];
+    elseif (choose<hv)
+        y_f(:,kk) = Y(1:len,:);
+        XX_f(:,:,kk) = XX(1:len,:);
+        XX_temp = XX; XX_temp(1:len+hv,:) = [];
+        y_temp = Y; y_temp(1:len+hv,:) = [];
+    elseif (choose+len+hv>n)
+        y_f(:,kk) = Y(end-len+1:end,:);
+        XX_f(:,:,kk) = XX(end-len+1:end,:);
+        XX_temp = XX; XX_temp(end-len+1-hv:end,:) = [];
+        y_temp = Y; y_temp(end-len+1-hv:end,:) = [];
     end
-    
-    y_temp = Y; XX_temp = XX;
-    y_temp(choose+1-hv:choose+len+hv) = []; XX_temp(choose+1-hv:choose+len+hv,:) = [];
-    
-    y_f(:,kk) = Y(choose+1:choose+len); XX_f(:,:,kk) = XX(choose+1:choose+len,:);
-    
     b_g = [];
     for ii = 1:length(lambda)
         b_temp = [];
