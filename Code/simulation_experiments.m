@@ -20,9 +20,7 @@ for oo = 1:Nsim
      
     % Generation of the MARCH based process
     [res,Sigma] = DGP_march15(T,N);
-    
-    % len is the size of the test set for cross-validation 
-    len = round(T/4); 
+
     % fold is the number of folds for cross-validation
     folds = 5;
     
@@ -34,15 +32,15 @@ for oo = 1:Nsim
     % the choice of the grid is important to control for sparsity: the
     % larger, to more zeros are obtained
     p = 10;
-    lambda = 0.2*(0.01:0.01:0.5)*sqrt(log(p*N^2)/T); 
-    [H_scad,b_scad,~,~,~,~] = SV_process_memo(res,p,'scad','no-constant',lambda,len,folds);
+    lambda = 0.2*(0.01:0.01:1)*sqrt(log(p*N^2)/T); 
+    [H_scad,b_scad,~,~,~,~] = SV_process_memo(res,p,'scad','no-constant',lambda,folds);
     
     % MCP penalisation
     lambda = 0.2*(0.01:0.01:0.5)*sqrt(log(p*N^2)/T); 
-    [H_mcp,b_mcp,~,~,~,~] = SV_process_memo(res,p,'mcp','no-constant',lambda,len,folds);
+    [H_mcp,b_mcp,~,~,~,~] = SV_process_memo(res,p,'mcp','no-constant',lambda,folds);
     
     % Non-penalised MSV 
-    [H_npen,b_nonpen,~,~,~,~] = SV_process_memo(res,p,'nonpen','no-constant',lambda,len,folds);
+    [H_npen,b_nonpen,~,~,~,~] = SV_process_memo(res,p,'nonpen','no-constant',lambda,folds);
     
     % scalar DCC, two-step Gaussian QMLE method
     res_temp = res(p+1:end,:); T = length(res_temp);
@@ -101,15 +99,15 @@ for oo = 1:Nsim
     
     [res,Sigma] = DGP_march50(T,N);
     
-    len = round(T/4); folds = 5;
+    folds = 5;
  
     p = 5;
     lambda = 0.2*(0.01:0.01:0.5)*sqrt(log(p*N^2)/T);  
-    [H_scad,b_scad,~,~,~,~] = SV_process_memo(res,p,'scad','no-constant',lambda,len,folds);
+    [H_scad,b_scad,~,~,~,~] = SV_process_memo(res,p,'scad','no-constant',lambda,folds);
     
-    [H_mcp,b_mcp,~,~,~,~] = SV_process_memo(res,p,'mcp','no-constant',lambda,len,folds); 
+    [H_mcp,b_mcp,~,~,~,~] = SV_process_memo(res,p,'mcp','no-constant',lambda,folds); 
     
-    [H_npen,b_nonpen,~,~,~,~] = SV_process_memo(res,p,'nonpen','no-constant',lambda,len,folds);
+    [H_npen,b_nonpen,~,~,~,~] = SV_process_memo(res,p,'nonpen','no-constant',lambda,folds);
     
     res_temp = res(p+1:end,:); T = length(res_temp);
     [parameters_dcc,Rt]=dcc_mvgarch(res_temp);
@@ -159,15 +157,15 @@ for oo = 1:Nsim
     
     [res,Sigma] = DGP_march100(T,N);
     
-    len = round(T/4); folds = 5;
+    folds = 5;
     
     p = 5; 
     lambda = 0.2*(0.01:0.01:0.5)*sqrt(log(p*N^2)/T);  
-    [H_scad,b_scad,~,~,~,~] = SV_process_memo(res,p,'scad','no-constant',lambda,len,folds);
+    [H_scad,b_scad,~,~,~,~] = SV_process_memo(res,p,'scad','no-constant',lambda,folds);
     
-    [H_mcp,b_mcp,~,~,~,~] = SV_process_memo(res,p,'mcp','no-constant',lambda,len,folds);
+    [H_mcp,b_mcp,~,~,~,~] = SV_process_memo(res,p,'mcp','no-constant',lambda,folds);
 
-    [H_npen,b_nonpen,~,~,~,~] = SV_process_memo(res,p,'nonpen','no-constant',lambda,len,folds);
+    [H_npen,b_nonpen,~,~,~,~] = SV_process_memo(res,p,'nonpen','no-constant',lambda,folds);
     
     res_temp = res(p+1:end,:); T = length(res_temp);
     [parameters_dcc,Rt]=dcc_mvgarch(res_temp);
@@ -217,15 +215,15 @@ for oo = 1:Nsim
     
     [res,Sigma] = DGP_bekk15(T,N);
     
-    len = round(T/4); folds = 5;
+    folds = 5;
   
     p = 30;
     lambda = 0.5*(0.01:0.01:0.5)*sqrt(log(p*N^2)/T);  
-    [H_scad,b_scad,~,~,~,~] = SV_process_memo(res,p,'scad','no-constant',lambda,len,folds);
+    [H_scad,b_scad,~,~,~,~] = SV_process_memo(res,p,'scad','no-constant',lambda,folds);
     
-    [H_mcp,b_mcp,~,~,~,~] = SV_process_memo(res,p,'mcp','no-constant',lambda,len,folds);
+    [H_mcp,b_mcp,~,~,~,~] = SV_process_memo(res,p,'mcp','no-constant',lambda,folds);
     
-    [H_npen,b_nonpen,~,~,~,~] = SV_process_memo(res,p,'nonpen','no-constant',lambda,len,folds);
+    [H_npen,b_nonpen,~,~,~,~] = SV_process_memo(res,p,'nonpen','no-constant',lambda,folds);
     
     res_temp = res(p+1:end,:); T = length(res_temp);
     [parameters_dcc,Rt]=dcc_mvgarch(res_temp);
@@ -273,15 +271,15 @@ for oo = 1:Nsim
     
     [res,Sigma] = DGP_bekk50(T,N);
     
-    len = round(T/4); folds = 5;
+    folds = 5;
    
     p = 15;
     lambda = 0.5*(0.01:0.01:0.5)*sqrt(log(p*N^2)/T); 
-    [H_scad,b_scad,~,~,~,~] = SV_process_memo(res,p,'scad','no-constant',lambda,len,folds);
+    [H_scad,b_scad,~,~,~,~] = SV_process_memo(res,p,'scad','no-constant',lambda,folds);
     
-    [H_mcp,b_mcp,~,~,~,~] = SV_process_memo(res,p,'mcp','no-constant',lambda,len,folds); 
+    [H_mcp,b_mcp,~,~,~,~] = SV_process_memo(res,p,'mcp','no-constant',lambda,folds); 
       
-    [H_npen,b_nonpen,~,~,~,~] = SV_process_memo(res,p,'nonpen','no-constant',lambda,len,folds);
+    [H_npen,b_nonpen,~,~,~,~] = SV_process_memo(res,p,'nonpen','no-constant',lambda,folds);
     
     res_temp = res(p+1:end,:); T = length(res_temp);
     [parameters_dcc,Rt]=dcc_mvgarch(res_temp);
@@ -331,7 +329,7 @@ for oo = 1:Nsim
     
     [res,Sigma] = DGP_bekk100(T,N);
     
-    len = round(T/4); folds = 5;
+    folds = 5;
     
     p = 5;
     lambda = 0.5*(0.01:0.01:0.5)*sqrt(log(p*N^2)/T); 

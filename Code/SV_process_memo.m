@@ -1,4 +1,4 @@
-function [H,b,B_hat_save,Sig_zeta,Sig_alpha,Gamma] = SV_process_memo(data,p,method,constant,lambda,len,K)
+function [H,b,B_hat_save,Sig_zeta,Sig_alpha,Gamma] = SV_process_memo(data,p,method,constant,lambda,K)
 
 % - data: T x N vector of observations
 % - p: number of lags for the first step
@@ -8,7 +8,6 @@ function [H,b,B_hat_save,Sig_zeta,Sig_alpha,Gamma] = SV_process_memo(data,p,meth
 %       ==> integrate intercept parameter in the first step: 'constant'
 %       ==> no intercept parameter in the first step: 'no-constant'
 % - lambda: penalisation parameter
-% - len: length of the data sets on which the penalisation is performed
 % - K: number of folds for cross-validation
 
 % outputs:
@@ -65,21 +64,21 @@ parfor ii = 1:N
     switch method
         case 'lasso'
             % lasso penalization
-            [b1,~]= Lasso_CV(xx(p+1:end,ii),XX,lambda,len,K);
+            [b1,~]= Lasso_CV(xx(p+1:end,ii),XX,lambda,K);
             b = [b;b1'];       
         case 'alasso'
             % adaptive lasso penalization
             % eta_p: value of the exponent entering in the adaptive lasso
             eta_p = 3;
-            [b2,~,~] = adaptive_Lasso_CV(xx(p+1:end,ii),XX,lambda(end),eta_p,len,K);
+            [b2,~,~] = adaptive_Lasso_CV(xx(p+1:end,ii),XX,lambda(end),eta_p,K);
             b = [b;b2'];
         case 'scad'
             % scad penalization 
-            [b3,~] = scad_mcp_CV(xx(p+1:end,ii),XX,scad,mcp,lambda,len,K,'scad');
+            [b3,~] = scad_mcp_CV(xx(p+1:end,ii),XX,scad,mcp,lambda,K,'scad');
             b = [b;b3'];
         case 'mcp'
             % mcp penalization 
-            [b4,~] = scad_mcp_CV(xx(p+1:end,ii),XX,scad,mcp,lambda,len,K,'mcp');
+            [b4,~] = scad_mcp_CV(xx(p+1:end,ii),XX,scad,mcp,lambda,K,'mcp');
             b = [b;b4'];
         case 'nonpen'
             % non-penalized model: simple OLS

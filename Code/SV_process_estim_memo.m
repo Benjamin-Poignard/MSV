@@ -1,4 +1,4 @@
-function [b,B_hat,Sig_zeta,Sig_alpha,Gamma] = SV_process_estim_memo(data,p,method,constant,lambda,len,K)
+function [b,B_hat,Sig_zeta,Sig_alpha,Gamma] = SV_process_estim_memo(data,p,method,constant,lambda,K)
 
 % This code estimates the MSV parameters only
 % Use generate_SV_process.m to generate the MSV based variance covariance
@@ -62,21 +62,21 @@ parfor ii = 1:N
     switch method
         case 'lasso'
             % lasso penalization 
-            [b1,~]= Lasso_CV(xx(p+1:end,ii),XX,lambda,len,K);
+            [b1,~]= Lasso_CV(xx(p+1:end,ii),XX,lambda,K);
             b = [b;b1'];
         case 'alasso'
             % adaptive lasso penalization
             % eta_p: value of the exponent entering in the adaptive lasso
             eta_p = 3;
-            [b2,~,~] = adaptive_Lasso_CV(xx(p+1:end,ii),XX,lambda,eta_p,len,K);
+            [b2,~,~] = adaptive_Lasso_CV(xx(p+1:end,ii),XX,lambda,eta_p,K);
             b = [b;b2'];
         case 'scad'
             % scad penalization 
-            [b3,~] = scad_mcp_CV(xx(p+1:end,ii),XX,scad,mcp,lambda,len,K,'scad');
+            [b3,~] = scad_mcp_CV(xx(p+1:end,ii),XX,scad,mcp,lambda,K,'scad');
             b = [b;b3'];
         case 'mcp'
             % scad penalization 
-            [b4,~] = scad_mcp_CV(xx(p+1:end,ii),XX,scad,mcp,lambda,len,K,'mcp');
+            [b4,~] = scad_mcp_CV(xx(p+1:end,ii),XX,scad,mcp,lambda,K,'mcp');
             b = [b;b4'];
         case 'nonpen'
             % non-penalized model: simple OLS
